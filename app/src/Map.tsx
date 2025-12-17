@@ -10,7 +10,10 @@ const entColors: Record<EntClass, string> = {
 };
 
 export default function Map() {
-    const [playerPosition, setPlayerPosition] = useState("");
+    const [playerPosition, setPlayerPosition] = useState<{
+        x: string;
+        y: string;
+    }>({ x: "", y: "" });
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -29,7 +32,7 @@ export default function Map() {
             const points = await fetchGameJSON("TopDown");
             const entities = await fetchGameJSON("Entities");
 
-            if (points) {
+            if (points && Array.isArray(points)) {
                 for (const point of points) {
                     point[0] = -point[0];
                 }
@@ -37,7 +40,7 @@ export default function Map() {
                 const pos = { x: points[0][0], y: points[0][1] };
                 const fvec = { x: points[1][0], y: points[1][1] };
 
-                setPlayerPosition(`${pos.x} ${pos.y}`);
+                setPlayerPosition({ x: pos.x, y: pos.y });
 
                 ctx.clearRect(0, 0, width, height);
 
@@ -85,12 +88,34 @@ export default function Map() {
         setInterval(fetchData, 100);
     }, []);
 
+    const onClick = (e: React.MouseEvent) => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const width = canvas.width;
+        const height = canvas.height;
+        const rect = canvas.getBoundingClientRect();
+        const cx = e.clientX - rect.left;
+        const cy = e.clientY - rect.top;
+
+        const worldX = ((cx - width / 2) / width) * 2048 + playerPosition.x;
+        const worldY = ((cy - height / 2) / height) * 2048 + playerPosition.y;
+        console.log(-worldX, worldY);
+        fetchGameJSON("Teleport", `setpos ${-worldX} ${worldY} 0`);
+    };
+
     return (
         <>
             <p>
-                Player position: <b>{playerPosition}</b>
+                Player position:
+                <b>{`${playerPosition.x} ${playerPosition.y}`}</b>
             </p>
-            <canvas width="500" height="500" ref={canvasRef}></canvas>
+            <canvas
+                width="500"
+                height="500"
+                ref={canvasRef}
+                onClick={(e) => onClick(e)}
+            ></canvas>
         </>
     );
 }
