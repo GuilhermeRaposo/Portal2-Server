@@ -1,11 +1,11 @@
-export default async function fetchGameJSON(content) {
+export default async function fetchGameJSON(method: string) {
     try {
         const response = await fetch("/", {
             signal: AbortSignal.timeout(200),
-            method: content,
+            method: method,
         });
         return await response.json();
-    } catch (e) {
+    } catch {
         return null;
     }
 }

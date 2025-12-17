@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import fetchGameJSON from "./util";
 
-const entColors = {
+type EntClass = "prop_weighted_cube" | "prop_portal" | "prop_testchamber_door";
+
+const entColors: Record<EntClass, string> = {
     prop_weighted_cube: "#5577ff",
     prop_portal: "#ff0000",
     prop_testchamber_door: "#ffffff",
@@ -10,9 +12,19 @@ const entColors = {
 export default function Map() {
     const [playerPosition, setPlayerPosition] = useState("");
 
-    const canvasRef = useRef(null);
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        ctx.lineWidth = 2;
+        const width = canvas.width;
+        const height = canvas.height;
+
         const fetchData = async () => {
             const points = await fetchGameJSON("TopDown");
             const entities = await fetchGameJSON("Entities");
@@ -26,12 +38,6 @@ export default function Map() {
                 const fvec = { x: points[1][0], y: points[1][1] };
 
                 setPlayerPosition(`${pos.x} ${pos.y}`);
-
-                const canvas = canvasRef.current;
-                const ctx = canvas.getContext("2d");
-                ctx.lineWidth = 2;
-                const width = canvas.width;
-                const height = canvas.height;
 
                 ctx.clearRect(0, 0, width, height);
 
@@ -70,7 +76,7 @@ export default function Map() {
                             0,
                             Math.PI * 2
                         );
-                        ctx.fillStyle = entColors[entclass];
+                        ctx.fillStyle = entColors[entclass as EntClass];
                         ctx.fill();
                     }
                 }

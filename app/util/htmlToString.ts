@@ -1,12 +1,12 @@
 import * as fs from "fs";
 import * as path from "path";
 
-const INPUT_DIR = "./html";
-const OUTPUT_DIR = "./scripts/vscripts/pages";
+const INPUT_DIR = "./dist";
+const OUTPUT_DIR = "../scripts/vscripts/pages";
 
 function convertFile(inputPath: string, outputPath: string) {
     const html = fs.readFileSync(inputPath, "utf8");
-    const parsed = html.replace(/"/g, "'");
+    const parsed = html.replace(/"/g, `""`);
 
     const nut = `// AUTO-GENERATED FROM ${path.basename(inputPath)}
 ::sendResponse(@"

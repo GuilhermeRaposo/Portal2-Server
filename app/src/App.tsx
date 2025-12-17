@@ -1,9 +1,9 @@
-import { createRoot } from "react-dom";
+import { createRoot } from "react-dom/client";
 import MapName from "./MapName";
 import Map from "./Map";
+import { StrictMode } from "react";
 
-const root = createRoot(document.getElementById("root"));
-
+// eslint-disable-next-line react-refresh/only-export-components
 const App = () => {
     return (
         <>
@@ -14,4 +14,8 @@ const App = () => {
     );
 };
 
-root.render(<App />);
+createRoot(document.getElementById("root")!).render(
+    <StrictMode>
+        <App />
+    </StrictMode>
+);

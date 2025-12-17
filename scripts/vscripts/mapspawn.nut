@@ -12,7 +12,6 @@ IncludeScript("ppmod"); // Include ppmod as early as possible
     printl("Content-Type: "+ type +"; charset=utf-8");
     printl("Content-Length: " + contentLength);
     printl("");
-
     for (local i = 0; i < content.len(); i += 128) {
         local end = min(i + 128, content.len());
         print(content.slice(i, end));
@@ -25,7 +24,7 @@ ppmod.onauto(async(function () {
     ::pplayer = ppmod.player(GetPlayer());
     yield ::pplayer.init();
 
-    // Routes
+    // Routes/controllers
     // Because we can not map url endpoints to commands in game, we use custom HTTP methods for each
     SendToConsole(@"alias GET ""script_execute pages/index""");
     SendToConsole(@"alias Entities ""script_execute controllers/entities""");
