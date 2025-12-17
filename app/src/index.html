@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            body {
+                background-color: black;
+                color: black;
+                margin: 15px;
+            }
+            body * {
+                color: white;
+                font-family: sans-serif;
+            }
+            button {
+                border: 2px solid white;
+                border-radius: 5px;
+                background: black;
+                padding: 10px;
+                outline: none;
+            }
+            canvas {
+                border: 2px solid white;
+                border-radius: 15px;
+                display: inline-block;
+                margin: 0 15px;
+            }
+        </style>
+        <title>Portal 2 Server</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script src="App.tsx"></script>
+    </body>
+</html>

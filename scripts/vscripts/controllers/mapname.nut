@@ -1,0 +1,1 @@
+::sendResponse("\"" + GetMapName() + "\"", "application/json");
