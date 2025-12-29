@@ -7,6 +7,6 @@ A real-time HTTP web server integrated into Portal 2 via a mod, exposing live ga
 This project is a mod for Portal 2 that injects an HTTP web server directly into the in-game console. It allows live game data to be accessed in real time, including:
 
 -   Player positions and orientations
--   Live minimap rendering
+-   Live minimap rendering (which is also clickable and allows the player to be teleported in-game to the corresponding coordinates)
 
 ![demo](https://github.com/GuilhermeRaposo/Portal2-Server/blob/master/demo.gif)
